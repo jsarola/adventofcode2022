@@ -1,0 +1,6 @@
+# swap
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+# visual code files
+ansible-repository.code-workspace
+.vscode/
