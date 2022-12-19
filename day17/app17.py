@@ -42,11 +42,15 @@ laroca = []
 torre = [['.','.','.','.','.','.','.'],['.','.','.','.','.','.','.'],['.','.','.','.','.','.','.']]
 files = 3
 
+larocaespotmoure = True
+
 def buscarFilaInicial():
     global files
 
     ultimaFila = - 1
+    print(files)
     for fila in reversed(range(files)):
+        print(torre[fila])
         if '#' in torre[fila]:
             ultimaFila = fila
             break
@@ -81,15 +85,14 @@ def moure_roca(quinMoviment):
     novaRoca = []
     if quinMoviment == 0:
         for element in laroca:
-            novaColumna = element[1] + 1
+            novaColumna = element[1] - 1
             if novaColumna < 0:
                 return
             elif element[0] < files:
                 if torre[element[0]][novaColumna] == '#':
                     return
                 else:
-                    novaRoca.append((element[0], novaColumna))
-                return
+                    novaRoca.append((element[0], novaColumna))                    
             else:
                 novaRoca.append((element[0], novaColumna))
         laroca = novaRoca.copy()
@@ -110,32 +113,40 @@ def moure_roca(quinMoviment):
 
 def baixar_roca():
     global laroca
+    global larocaespotmoure
 
     novaRoca = []
     for element in laroca:
         novaFila = element[0] - 1
         novaRoca.append((novaFila,element[1]))
+        if novaFila < 0:
+            larocaespotmoure = False
+        elif torre[novaFila][element[1]] == '#':
+            larocaespotmoure = False
     laroca = novaRoca.copy()
 
 def roca_es_pot_moure():
-    for element in laroca:
-        novaFila = element[0] - 1
-        if novaFila < 0:
-            return False
-        elif torre[novaFila][element[1]] == '#':
-            return False
-    return True
+    global torre
+    global larocaespotmoure
 
-for roca in range(0, max_roques):
+    if larocaespotmoure:
+        return True
+    else:
+        for posicions in laroca:
+            torre[posicions[0]][posicions[1]] = '#'
+        larocaespotmoure = True
+        return False
+
+# for roca in range(0, max_roques):
+for roca in range(0, 2):
     posar_roca(roca % 5)
 
     elmoviment = 0
     while roca_es_pot_moure():
-        moure_roca(moviment[elmoviment % max_moviment])
+        moure_roca(moviment[elmoviment])
+        print('moviment', elmoviment, moviment[elmoviment], laroca)
         elmoviment = elmoviment + 1
         baixar_roca()
-        print('moviment', elmoviment, laroca)
-    
-    break
+
 
 print(torre)
