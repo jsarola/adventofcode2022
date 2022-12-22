@@ -1,4 +1,4 @@
-file = 'test.txt'
+file = 'input.txt'
 logging = True
 
 fitxer = open(file, 'r')
@@ -106,30 +106,53 @@ solucioDre = buscarMicoHuman(llistaMicos['root'].dreta)
 
 from sympy import symbols, solve
 
-def buscarExpressio(elmico, laexpressio):
-    print('laexpressio', laexpressio)
-    if llistaMicos[elmico].esquerra == 'humn':
-        laexpressio = buscarExpressio(llistaMicos[elmico].pare, '(x' + llistaMicos[elmico].operacio + str(buscarMico(llistaMicos[elmico].dreta)) + ')')
-    elif llistaMicos[elmico].dreta == 'humn':
-        laexpressio = buscarExpressio(llistaMicos[elmico].pare, '('+ str(buscarMico(llistaMicos[elmico].esquerra)) + llistaMicos[elmico].operacio + 'x)')
-    else:
-        laexpressio = ''   
-    return laexpressio
+
+def buscarExpressio(elmico, elmicofill, laexpressio):
+    global formula
+    # print('Pare ', elmico, ' FIll', elmicofill)
+    # print('esquerra ', llistaMicos[elmico].esquerra, ' dreta', llistaMicos[elmico].dreta)
+
+    if llistaMicos[elmico].pare == '':
+        formula = laexpressio
+        return
+
+    if llistaMicos[elmico].esquerra == elmicofill:
+        if elmicofill == 'humn':
+            tmpExpressio = 'x'
+        else:
+            tmpExpressio = laexpressio
+        # print('busco esquerra')
+        laexpressio = '(' + tmpExpressio + llistaMicos[elmico].operacio + str(buscarMico(llistaMicos[elmico].dreta)) + ')'
+        # print('la expressio', laexpressio)
+        buscarExpressio(llistaMicos[elmico].pare, elmico, laexpressio)
+    elif llistaMicos[elmico].dreta == elmicofill:
+        if elmicofill == 'humn':
+            tmpExpressio = 'x'
+        else:
+            tmpExpressio = laexpressio
+        # print('busco dreta')
+        laexpressio = '('+ str(buscarMico(llistaMicos[elmico].esquerra)) + llistaMicos[elmico].operacio + tmpExpressio + ')'
+        #print('la expressio', laexpressio)
+        buscarExpressio(llistaMicos[elmico].pare, elmico, laexpressio)
+
+    # tmpExpressio = buscarExpressio(llistaMicos[elmico].pare, elmico, laexpressio)
+    # print('la expressio final', formula)
+    return
 
 if solucioEsq == 'humn':
+    buscarExpressio(llistaMicos['humn'].pare, 'humn', '')
     print('A')
-    formula = buscarExpressio(llistaMicos['humn'].pare, '')
-    expr = str(int(solucioDre)) + '-' + formula
-else:
-    print('B')
-    formula = buscarExpressio(llistaMicos['humn'].pare, '')
     expr = str(int(solucioEsq)) + '-' + formula
+else:
+    buscarExpressio(llistaMicos['humn'].pare, 'humn', '')
+    print('B')
+    expr = str(int(solucioDre)) + '-' + formula
 
 print('la formula', expr)
 x = symbols('x')
-# expr = 150-(x-10)
+# expr = 150-(4+(2*(x-3)))
 
-# laSolucio = solve(expr)
+laSolucio = solve(expr)
 
 
 print("What number do you yell to pass root's equality test?", laSolucio)
