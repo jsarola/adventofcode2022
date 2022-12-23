@@ -9,21 +9,23 @@ Your job is to work out the number the monkey named root will yell before the mo
 
 For example:
 
- root: pppw + sjmn
- dbpl: 5
- cczh: sllz + lgvd
- zczc: 2
- ptdq: humn - dvpt
- dvpt: 3
- lfqf: 4
- humn: 5
- ljgn: 2
- sjmn: drzm * dbpl
- sllz: 4
- pppw: cczh / lfqf
- lgvd: ljgn * ptdq
- drzm: hmdt - zczc
- hmdt: 32
+```text
+root: pppw + sjmn
+dbpl: 5
+cczh: sllz + lgvd
+zczc: 2
+ptdq: humn - dvpt
+dvpt: 3
+lfqf: 4
+humn: 5
+ljgn: 2
+sjmn: drzm * dbpl
+sllz: 4
+pppw: cczh / lfqf
+lgvd: ljgn * ptdq
+drzm: hmdt - zczc
+hmdt: 32
+```
 
 Each line contains the name of a monkey, a colon, and then the job of that monkey:
 
@@ -41,7 +43,8 @@ This process continues until root yells a number: 152.
 
 However, your actual situation involves considerably more monkeys. What number will the monkey named root yell?
 
-Your puzzle answer was 49288254556480.
+Your puzzle answer was **49288254556480**.
+***
 
 ## Part Two
 Due to some kind of monkey-elephant-human mistranslation, you seem to have misunderstood a few key details about the riddle.
@@ -54,4 +57,4 @@ In the above example, the number you need to yell to pass root's equality test i
 
 What number do you yell to pass root's equality test?
 
-Your puzzle answer was 3558714869436.
+Your puzzle answer was **3558714869436**.
